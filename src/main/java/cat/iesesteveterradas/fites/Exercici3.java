@@ -2,14 +2,18 @@ package cat.iesesteveterradas.fites;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import cat.iesesteveterradas.fites.objectes.Exercici3nau;
 
 /**
  * Implementa el codi que realitzi el següent:
  * 
- * - Serialitza aquesta llista en un fitxer binari anomenat 'Exercici3.dat' al directori de treball especificat.
- * - Després d'una pausa d'1 segon, deserialitza la llista del fitxer binari i la imprimeix per pantalla amb el format "Nom, País Any".
+ * - Serialitza aquesta llista en un fitxer binari
+ * anomenat 'Exercici3.dat' al directori de treball especificat.
+ * - Després d'una pausa d'1 segon,
+ * deserialitza la llista del fitxer binari i la imprimeix per pantalla amb el format "Nom, País Any".
  * - Gestió d'errors: si hi ha algun problema en escriure o llegir el fitxer (ex. fitxer no trobat), mostra l'excepció a la consola amb e.printStackTrace()
  */
 public class Exercici3 {
@@ -50,18 +54,68 @@ public class Exercici3 {
 
     // Mètode per serialitzar la llista a un fitxer
     public void serialitzaLlista(String filePath, ArrayList<Exercici3nau> llista) {
-        // *************** CODI EXERCICI FITA **********************/
+        File file = new File(filePath);
+        FileOutputStream out = null;
+        ObjectOutputStream ObjectOut = null;
+        try {
+            out = new FileOutputStream(filePath);
+            ObjectOut = new ObjectOutputStream(out);
+            for (Exercici3nau nau : llista) {
+                ObjectOut.writeObject(nau);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (ObjectOut != null) {
+                    ObjectOut.close();
+                }
+            } catch (Exception e) {
+               e.printStackTrace();
+            }
+        }
     }
 
     // Mètode per deserialitzar la llista del fitxer
     public ArrayList<Exercici3nau> deserialitzaLlista(String filePath) {
-        // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir 
+        ArrayList<Exercici3nau> list = new ArrayList<>();
+        File file = new File(filePath);
+        FileInputStream in = null;
+        ObjectInputStream ObjectIn = null;
+        try {
+            in = new FileInputStream(file);
+            ObjectIn = new ObjectInputStream(in);
+            Object readObject = null;
+            while ((readObject = ObjectIn.readObject()) != null) {
+                list.add((Exercici3nau) readObject);
+            }
+        } catch (EOFException e) {
+            //Expected
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (ObjectIn != null) {
+                    ObjectIn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
     }
 
     // Mètode per imprimir la llista
     public void imprimeixLlista(ArrayList<Exercici3nau> llista) {
-        // *************** CODI EXERCICI FITA **********************/
+        for (Exercici3nau nau : llista) {
+            System.out.println(nau.toString());
+        }
     }
 
     /****************************************************************************/

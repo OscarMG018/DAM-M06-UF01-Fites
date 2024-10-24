@@ -38,13 +38,38 @@ public class Exercici2Llegeix {
 
     // Mètode que llegeix el fitxer i retorna una llista de persones
     public List<Exercici2Persona> llegeixFitxer(String filePath) {
-        // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir 
+        ArrayList<Exercici2Persona> list = new ArrayList<>();
+        FileInputStream fis = null;
+        DataInputStream dis = null;
+        try {
+            fis = new FileInputStream(filePath);
+            dis = new DataInputStream(fis);
+            while (dis.available() > 0) {
+                // (nom, cognom, any de naixement).
+                list.add(new Exercici2Persona(dis.readUTF(), dis.readUTF(), dis.readInt()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (dis != null) {
+                    dis.close();
+                }
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
     }
 
     // Mètode que imprimeix les dades de la llista de persones
     public void imprimeixPersones(List<Exercici2Persona> persones) {
-        // *************** CODI EXERCICI FITA **********************/
+        for (Exercici2Persona persona : persones) {
+            System.out.println(persona.toString());
+        }
     }
 
     /****************************************************************************/

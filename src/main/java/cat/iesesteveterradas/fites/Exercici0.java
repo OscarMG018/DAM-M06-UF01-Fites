@@ -5,10 +5,12 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Objectius:
- *   Implementa els mètodes: comprovaExistenciaFitxer, determinaSiEsOcult, obtenirDataUltimaModificacio, verificarEsPotModificar, llistarArxiusDirectori 
+ *   Implementa els mètodes: comprovaExistenciaFitxer,
+ * determinaSiEsOcult, obtenirDataUltimaModificacio, verificarEsPotModificar, llistarArxiusDirectori 
  * 
  *   La funcionalitat que s'espera que realitzin és:
  * 
@@ -61,32 +63,40 @@ public class Exercici0 {
 
     // Mètode per comprovar l'existència del fitxer
     public Boolean comprovaExistenciaFitxer() {
-        // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir  
+        File file = new File(filePath);
+        return file.exists();
     }
 
     // Mètode per determinar si el fitxer és ocult
     public Boolean determinaSiEsOcult() {
-        // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir 
+        File file = new File(filePath);
+        return file.isHidden();
     }
 
     // Mètode per obtenir la data de l'última modificació
     public Date obtenirDataUltimaModificacio() {
-        // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir  
+        File file = new File(filePath);
+        long mili = file.lastModified();
+        return new Date(mili);
     }
 
     // Mètode per verificar si el fitxer es pot modificar
     public Boolean verificarEsPotModificar() {
-        // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir 
+        File file = new File(filePath);
+        return file.canWrite();
     }
 
     // Mètode per llistar els fitxers del directori base
     public ArrayList<String> llistarArxiusDirectori() {
-        // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir 
+        File file = new File(System.getProperty("user.dir") + "/data/exercici0");
+        File[] fitxers = file.listFiles();
+        ArrayList<String> noms = new ArrayList<>();
+        if (fitxers == null)
+            return new ArrayList<String>();
+        for (File fitxer : fitxers) {
+            noms.add(fitxer.getName());
+        }
+        return noms;
     }
 
     /****************************************************************************/
